@@ -34,7 +34,7 @@ Citizen.CreateThread(function()
 			local playerPed = GetPlayerPed(-1)
 			if intruderDetected == false and PlayerData.job.name ~= Config.Job then
 				local x,y,z = table.unpack(GetEntityCoords(GetPlayerPed(-1), false))
-				TriggerServerEvent('esx_phone:send', Config.Job, 'An intruder is within ' ..Config.Distance.. 'm of your treehouse ', true, {x =x, y =y, z =z})
+				TriggerServerEvent('esx_phone:send', Config.Job, 'An intruder is within ' ..Config.Distance.. 'm of your hideout ', true, {x =x, y =y, z =z})
 			end															
 		
 			intruderDetected = true
