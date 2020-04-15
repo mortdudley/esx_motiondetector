@@ -1,11 +1,15 @@
 ESX                           = nil
 local PlayerData              = {}
-local intruderDetected 		  = false
+local isInZone      		  = false
 
 Citizen.CreateThread(function()
 	while ESX == nil do
 		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 		Citizen.Wait(0)
+	end
+
+	while ESX.GetPlayerData().job == nil do
+		Citizen.Wait(10)
 	end
 
 	PlayerData = ESX.GetPlayerData()
@@ -23,24 +27,35 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(0)
+		Citizen.Wait(0)
+		local playerPed = GetPlayerPed(-1)
+		local playerCoords = GetEntityCoords(playerPed, false)
+		local dist
 
-        for k in pairs(Config.ProximityAlarms) do
+		for k,v in pairs(Config.ProximityAlarms) do
+			for k2,v2 in pairs(v) do 
+				dist = Vdist(playerCoords.x, playerCoords.y, playerCoords.z, v.coords)
 
-        local playerCoords = GetEntityCoords(GetPlayerPed(-1), false)
-        local dist = Vdist(playerCoords.x, playerCoords.y, playerCoords.z, Config.ProximityAlarms[k].x, Config.ProximityAlarms[k].y, Config.ProximityAlarms[k].z)
-
-        if dist <= Config.Distance then
-			local playerPed = GetPlayerPed(-1)
-			if intruderDetected == false and PlayerData.job.name ~= Config.Job then
-				local x,y,z = table.unpack(GetEntityCoords(GetPlayerPed(-1), false))
-				TriggerServerEvent('esx_phone:send', Config.Job, 'An intruder is within ' ..Config.Distance.. 'm of your hideout ', true, {x =x, y =y, z =z})
-			end															
-		
-			intruderDetected = true
-			Citizen.Wait(Config.AlertTime)
-			intruderDetected = false
+				if dist <= v.alertDistance then
+					isInZone = true
+					if isInZone == true and PlayerData.job.name ~= v.whitelistedJob then
+						TriggerServerEvent('esx_motiondetector:Broadcast', playerCoords)
+					end															
+				
+					Citizen.Wait(Config.AlertTime)
+					isInZone = false
+				end
 			end
-        end
+		end
     end
+end)
+
+RegisterNetEvent('esx_motiondetector:Notify')
+AddEventHandler('esx_motiondetector:Notify', function(coords)
+	if Config.NotificationType == 1 then
+		TriggerServerEvent('esx_phone:send', Config.Job, 'An intruder is within ' ..Config.Distance.. 'm of your hideout ', true, {x = coords.x, y = coords.y, z = coords.z})
+	elseif Config.NotificationType == 2 then
+		ESX.ShowNotification('An intruder is within ' ..Config.Distance.. 'm of your hideout ', false, true)
+		PlaySound(-1, "Event_Start_Text", "GTAO_FM_Events_Soundset", 0, 0, 1)
+	end
 end)

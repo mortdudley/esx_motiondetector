@@ -11,7 +11,8 @@ client_scripts {
     'client/main.lua'
 }
 
+server_script 'server.lua'
+
 dependencies {
-    'es_extended',
-    'esx_phone'
+    'es_extended'
 }
