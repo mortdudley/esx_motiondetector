@@ -15,4 +15,4 @@ Requirements:
 * esx_phone
 
 
-**Side note: Despite what NightDesigns says, his only contribution to this script was to talk absolute shit in my ear, causing me to make a minor spelling error, thus forcing me to waste an extra 10 minutes of my life hunting down the error. Thanks NightDesigns, you ugly bastard.**
+**Side note: Despite what NightDesigns says, his only contribution to this script was to talk absolute shit in my ear, causing me to make a minor spelling error, thus forcing me to waste an extra 10 minutes of my life hunting down the error. Thanks NightDesigns, you ugly bastard :P**
