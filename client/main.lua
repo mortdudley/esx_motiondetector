@@ -53,9 +53,9 @@ end)
 RegisterNetEvent('esx_motiondetector:Notify')
 AddEventHandler('esx_motiondetector:Notify', function(coords)
 	if Config.NotificationType == 1 then
-		TriggerServerEvent('esx_phone:send', Config.Job, 'An intruder is within ' ..Config.Distance.. 'm of your hideout ', true, {x = coords.x, y = coords.y, z = coords.z})
+		TriggerServerEvent('esx_phone:send', Config.Job, 'An intruder has been detected by your motion detector', true, {x = coords.x, y = coords.y, z = coords.z})
 	elseif Config.NotificationType == 2 then
-		ESX.ShowNotification('An intruder is within ' ..Config.Distance.. 'm of your hideout ', false, true)
+		ESX.ShowNotification('An intruder has been detected by your motion detector', false, true)
 		PlaySound(-1, "Event_Start_Text", "GTAO_FM_Events_Soundset", 0, 0, 1)
 	end
 end)
