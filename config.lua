@@ -1,7 +1,10 @@
 Config                            = {}
-Config.Job                        = ''
-Config.ProximityAlarms            = {
-                                  	{x = -1062.82, y = 4828.08, z = 270.30}
-                                    }
+Config.ProximityAlarms = {
+  TestLocation = {
+    coords = vector3(337.53, -1349.06, 32.51),
+    alertDistance = 200,
+    whitelistedJob = 'test'
+  }
+}
 Config.AlertTime                  = 5000   -- seconds multiplied by 1000
-Config.Distance                   = 200    -- distance in metres
+Config.NotificationType           = 2      -- 1 for esx_phone output, 2 for a simple notification
